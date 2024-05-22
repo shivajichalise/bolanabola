@@ -1,10 +1,10 @@
-import ThemeSwitcher from "./components/ThemeSwitcher"
+import Navbar from "./components/Navbar"
 
 function App() {
     return (
-        <>
-            <ThemeSwitcher />
-        </>
+        <div className="flex justify-center items-center p-5">
+            <Navbar />
+        </div>
     )
 }
 

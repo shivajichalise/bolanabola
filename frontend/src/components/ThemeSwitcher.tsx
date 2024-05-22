@@ -20,13 +20,13 @@ const ThemeSwitcher = () => {
         <div className="p-2">
             {theme === "emerald" ? (
                 <IconMoonFilled
-                    size={25}
+                    size={20}
                     className="cursor-pointer"
                     onClick={toggleThemeHandler}
                 />
             ) : (
                 <IconSunFilled
-                    size={25}
+                    size={20}
                     className="cursor-pointer"
                     onClick={toggleThemeHandler}
                 />
