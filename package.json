@@ -1,0 +1,19 @@
+{
+  "name": "bolanabola",
+  "version": "1.0.0",
+  "description": "Bola na bola, k garo bhau khako?",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivajichalise/bolanabola.git"
+  },
+  "author": "Shivaji Chalise",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shivajichalise/bolanabola/issues"
+  },
+  "homepage": "https://github.com/shivajichalise/bolanabola#readme"
+}
