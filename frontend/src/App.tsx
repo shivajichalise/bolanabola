@@ -1,7 +1,9 @@
+import ThemeSwitcher from "./components/ThemeSwitcher"
+
 function App() {
     return (
         <>
-            <button className="btn btn-primary">Hello</button>
+            <ThemeSwitcher />
         </>
     )
 }
