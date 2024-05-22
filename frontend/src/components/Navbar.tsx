@@ -12,7 +12,7 @@ const Navbar = () => {
     ]
 
     return (
-        <div className="navbar bg-primary w-full lg:w-4/5 rounded-lg">
+        <div className="navbar bg-primary rounded-lg">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div
@@ -46,7 +46,12 @@ const Navbar = () => {
                         ))}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Bola na bola</a>
+                <a
+                    className="text-2xl ml-3 nanum cursor-pointer lg:text-3xl"
+                    id="handwritten"
+                >
+                    Bola na bola
+                </a>
             </div>
 
             <div className="navbar-center hidden lg:flex">
