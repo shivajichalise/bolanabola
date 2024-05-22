@@ -1,19 +1,29 @@
 {
-  "name": "bolanabola",
-  "version": "1.0.0",
-  "description": "Bola na bola, k garo bhau khako?",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shivajichalise/bolanabola.git"
-  },
-  "author": "Shivaji Chalise",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shivajichalise/bolanabola/issues"
-  },
-  "homepage": "https://github.com/shivajichalise/bolanabola#readme"
+    "name": "bolanabola",
+    "version": "1.0.0",
+    "description": "Bola na bola, k garo bhau khako?",
+    "main": "index.js",
+    "scripts": {
+        "start": "ts-node backend/server.ts",
+        "server": "npx nodemon backend/server.ts",
+        "client": "npm run dev --prefix frontend",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shivajichalise/bolanabola.git"
+    },
+    "author": "Shivaji Chalise",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/shivajichalise/bolanabola/issues"
+    },
+    "homepage": "https://github.com/shivajichalise/bolanabola#readme",
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "nodemon": "^3.1.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
+    }
 }
