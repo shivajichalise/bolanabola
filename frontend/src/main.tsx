@@ -6,6 +6,8 @@ import { Provider } from "react-redux"
 import { store } from "./store.ts"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ProtectRoute from "./utils/ProtectRoute.tsx"
+import Login from "./pages/Login.tsx"
+import LandingPage from "./pages/LandingPage.tsx"
 
 const router = createBrowserRouter([
     {
@@ -17,12 +19,12 @@ const router = createBrowserRouter([
         ),
     },
     {
-        path: "/login",
-        element: <h1>login</h1>,
+        path: "/home",
+        element: <LandingPage />,
     },
     {
-        path: "/register",
-        element: <h1>Register</h1>,
+        path: "/login",
+        element: <Login />,
     },
 ])
 

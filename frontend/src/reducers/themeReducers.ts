@@ -8,7 +8,7 @@ const initialState: ThemeState = {
     mode:
         localStorage.getItem("THEME") !== null
             ? localStorage.getItem("THEME")!
-            : "emerald",
+            : "light",
 }
 
 const themeSlice = createSlice({
@@ -16,7 +16,7 @@ const themeSlice = createSlice({
     initialState,
     reducers: {
         toggleTheme: (state) => {
-            state.mode = state.mode === "emerald" ? "dracula" : "emerald"
+            state.mode = state.mode === "light" ? "dark" : "light"
             localStorage.setItem("THEME", state.mode)
         },
     },
