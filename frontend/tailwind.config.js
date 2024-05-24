@@ -19,13 +19,14 @@ export default {
         themes: [
             {
                 light: {
+                    "base-300": "#FFFFFF",
+                    primary: "#577399",
+                    "primary-content": "#4E688A",
+                    secondary: "#BDD5EA",
+
                     "base-100": "#495867",
                     "base-200": "#3A4652",
-                    "base-300": "#FFFFFF",
                     "base-content": "#2C353E",
-                    primary: "#577399",
-                    "primary-content": "#465C7A",
-                    secondary: "#BDD5EA",
                     "secondary-content": "#577399",
 
                     accent: "#81D2C7",
@@ -43,13 +44,14 @@ export default {
                     "error-content": "#C95D63",
                 },
                 dark: {
+                    "base-300": "#2C353E",
+                    primary: "#E7E8EC",
+                    "primary-content": "#DDDDDE",
+                    secondary: "#B9BABD",
+
                     "base-100": "#495867",
                     "base-200": "#3A4652",
-                    "base-300": "#2C353E",
                     "base-content": "#F6F6F7",
-                    primary: "#E7E8EC",
-                    "primary-content": "#F6F6F7",
-                    secondary: "#F6F6F7",
                     "secondary-content": "#E7E8EC",
 
                     accent: "#81D2C7",
