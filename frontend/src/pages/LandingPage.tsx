@@ -13,7 +13,12 @@ function LandingPage() {
         { title: "Typescript", description: "for static type checking" },
     ]
 
-    return <Navbar />
+    return (
+        <>
+            <Navbar />
+            <Hero />
+        </>
+    )
 }
 
 export default LandingPage
