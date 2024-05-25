@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux"
 import ThemeSwitcher from "./ThemeSwitcher"
-import { RootState } from "../store"
 import IconLink from "./IconLink"
 import {
     IconBrandGithub,
@@ -14,8 +12,6 @@ import { useState } from "react"
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-
-    const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn)
 
     const navLinks = [
         { label: "Home", link: "#home" },
@@ -92,11 +88,12 @@ const Navbar = () => {
 
                             <ThemeSwitcher />
 
-                            <VerticalDivider />
+                            <VerticalDivider className="hidden lg:flex" />
 
                             <IconLink
                                 style="primary"
-                                href="https://instagram.com"
+                                href="https://github.com/shivajichalise"
+                                target="_blank"
                                 className="hidden lg:flex"
                             >
                                 <IconBrandGithub size={22} />
@@ -104,68 +101,34 @@ const Navbar = () => {
 
                             <IconLink
                                 style="primary"
-                                href="https://instagram.com"
+                                href="https://linkedin.com/in/shivajichalise"
                                 className="hidden lg:flex"
-                            >
-                                <IconBrandInstagram />
-                            </IconLink>
-
-                            <IconLink
-                                style="primary"
-                                href="https://instagram.com"
-                                className="hidden lg:flex"
+                                target="_blank"
                             >
                                 <IconBrandLinkedin />
                             </IconLink>
 
+                            <IconLink
+                                style="primary"
+                                href="https://instagram.com/shivajichalise"
+                                className="hidden lg:flex"
+                                target="_blank"
+                            >
+                                <IconBrandInstagram />
+                            </IconLink>
+
                             <VerticalDivider className="hidden lg:flex" />
 
-                            {isSignedIn ? (
-                                <div className="dropdown dropdown-end">
-                                    <div
-                                        tabIndex={0}
-                                        role="button"
-                                        className="btn btn-ghost btn-circle avatar"
-                                    >
-                                        <div className="w-9 rounded-full">
-                                            <img
-                                                alt="Tailwind CSS Navbar component"
-                                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                                            />
-                                        </div>
-                                    </div>
-                                    <ul
-                                        tabIndex={0}
-                                        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-primary text-base-300 rounded-box w-52"
-                                    >
-                                        <li>
-                                            <a className="justify-between">
-                                                Profile
-                                                <span className="badge badge-error text-neutral">
-                                                    New
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>Settings</a>
-                                        </li>
-                                        <li>
-                                            <a>Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            ) : (
-                                <Button
-                                    style="default"
-                                    size="sm"
-                                    type="link"
-                                    href="https://google.com"
-                                    hasIcon={true}
-                                    icon={<IconBrandGoogleFilled size={20} />}
-                                    text="Login with Google"
-                                    className="hidden lg:flex"
-                                />
-                            )}
+                            <Button
+                                style="default"
+                                size="sm"
+                                type="link"
+                                href="https://google.com"
+                                hasIcon={true}
+                                icon={<IconBrandGoogleFilled size={20} />}
+                                text="Login with Google"
+                                className="hidden lg:flex"
+                            />
                         </div>
                     </div>
                 </div>
@@ -173,7 +136,7 @@ const Navbar = () => {
             <div
                 className={`w-screen ${isMobileMenuOpen ? "sm:block" : "hidden"}`}
             >
-                <ul className="menu bg-primary text-base-300 w-full flex justify-center items-center text-xl">
+                <ul className="absolute shadow-xl menu bg-primary text-base-300 w-full flex justify-center items-center text-xl">
                     {navLinks.map((link) => (
                         <li key={link.link} className="">
                             <a

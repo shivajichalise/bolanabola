@@ -10,6 +10,8 @@
 @font-face {
     font-family: 'Preeti';
     src: url('./fonts/preeti.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 :root {

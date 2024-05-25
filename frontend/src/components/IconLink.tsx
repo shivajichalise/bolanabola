@@ -19,7 +19,11 @@ const IconLink = (props: LinkProps) => {
     }
 
     return (
-        <Link className={`${classes} ${style} p-1`} to={props.href}>
+        <Link
+            className={`${classes} ${style} p-1`}
+            to={props.href}
+            target={props.target}
+        >
             {props.children}
         </Link>
     )

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../store"
 import { useEffect, useState } from "react"
 import CardProps from "../types/CardProps"
+import { Link } from "react-router-dom"
 
 const Card = (props: CardProps) => {
     const { icon, title, description, link, href } = props
@@ -40,13 +41,14 @@ const Card = (props: CardProps) => {
             >
                 {description}
             </p>
-            <a
-                href={href}
+            <Link
+                to={href}
                 className="inline-flex font-medium items-center text-info hover:underline gap-1"
+                target="_blank"
             >
                 {link}
                 <IconArrowRight size={18} />
-            </a>
+            </Link>
         </div>
     )
 }

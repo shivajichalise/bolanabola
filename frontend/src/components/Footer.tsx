@@ -36,16 +36,28 @@ const Footer = () => {
                     </p>
                 </div>
                 <div className="flex">
-                    <IconLink style="neutral" href="https://instagram.com">
+                    <IconLink
+                        style="neutral"
+                        href="https://github.com/shivajichalise"
+                        target="_blank"
+                    >
                         <IconBrandGithub size={22} />
                     </IconLink>
 
-                    <IconLink style="neutral" href="https://instagram.com">
-                        <IconBrandInstagram />
+                    <IconLink
+                        style="neutral"
+                        href="https://linkedin.com/in/shivajichalise"
+                        target="_blank"
+                    >
+                        <IconBrandLinkedin />
                     </IconLink>
 
-                    <IconLink style="neutral" href="https://instagram.com">
-                        <IconBrandLinkedin />
+                    <IconLink
+                        style="neutral"
+                        href="https://instagram.com/shivajichalise"
+                        target="_blank"
+                    >
+                        <IconBrandInstagram />
                     </IconLink>
                 </div>
             </div>

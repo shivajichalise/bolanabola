@@ -1,4 +1,11 @@
-import { IconBrandRedux } from "@tabler/icons-react"
+import {
+    IconBrandGoogleBigQuery,
+    IconBrandRedux,
+    IconBrandSocketIo,
+    IconBrandZwift,
+    IconBrandReact,
+    IconBrandTypescript,
+} from "@tabler/icons-react"
 import Card from "../components/Card"
 
 const ToolsUsed = () => {
@@ -20,43 +27,43 @@ const ToolsUsed = () => {
                     icon={<IconBrandRedux size={25} />}
                     title="Redux"
                     description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
+                    link="Learn more about redux"
                     href="https://redux.js.org"
                 />
                 <Card
-                    icon={<IconBrandRedux size={25} />}
-                    title="Redux"
-                    description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
-                    href="https://redux.js.org"
+                    icon={<IconBrandGoogleBigQuery size={25} />}
+                    title="Tanstack Query"
+                    description="Declarative, always-up-to-date auto-managed queries and mutations"
+                    link="Learn more about tanstack query"
+                    href="https://tanstack.com/query/latest"
                 />
                 <Card
-                    icon={<IconBrandRedux size={25} />}
-                    title="Redux"
-                    description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
-                    href="https://redux.js.org"
+                    icon={<IconBrandZwift size={25} />}
+                    title="Zod"
+                    description="TypeScript-first schema declaration and validation"
+                    link="Learn more about zod"
+                    href="https://zod.dev"
                 />
                 <Card
-                    icon={<IconBrandRedux size={25} />}
-                    title="Redux"
-                    description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
-                    href="https://redux.js.org"
+                    icon={<IconBrandSocketIo size={25} />}
+                    title="Socket.io"
+                    description="Bidirectional and low-latency real time communication"
+                    link="Learn more about socket.io"
+                    href="https://socket.io"
                 />
                 <Card
-                    icon={<IconBrandRedux size={25} />}
-                    title="Redux"
-                    description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
-                    href="https://redux.js.org"
+                    icon={<IconBrandReact size={25} />}
+                    title="React router"
+                    description="Flawless client side routing"
+                    link="Learn more about react router"
+                    href="https://reactrouter.com"
                 />
                 <Card
-                    icon={<IconBrandRedux size={25} />}
-                    title="Redux"
-                    description="Flawless statemanagement using redux"
-                    link="Learn more abut redux"
-                    href="https://redux.js.org"
+                    icon={<IconBrandTypescript size={25} />}
+                    title="Typescript"
+                    description="Static type checking"
+                    link="Learn more about typescript"
+                    href="https://typescriptlang.org"
                 />
             </div>
         </div>

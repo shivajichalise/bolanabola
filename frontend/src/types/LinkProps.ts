@@ -7,6 +7,7 @@ interface LinkProps {
     href: string
     children?: ReactElement
     className?: string
+    target?: "_top" | "_self" | "_blank" | "_parent"
 }
 
 export default LinkProps
