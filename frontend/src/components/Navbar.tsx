@@ -95,6 +95,7 @@ const Navbar = () => {
                             <VerticalDivider />
 
                             <IconLink
+                                style="primary"
                                 href="https://instagram.com"
                                 className="hidden lg:flex"
                             >
@@ -102,6 +103,7 @@ const Navbar = () => {
                             </IconLink>
 
                             <IconLink
+                                style="primary"
                                 href="https://instagram.com"
                                 className="hidden lg:flex"
                             >
@@ -109,6 +111,7 @@ const Navbar = () => {
                             </IconLink>
 
                             <IconLink
+                                style="primary"
                                 href="https://instagram.com"
                                 className="hidden lg:flex"
                             >

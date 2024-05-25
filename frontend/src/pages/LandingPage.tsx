@@ -21,6 +21,7 @@ function LandingPage() {
             <Navbar />
             <Hero />
             <ToolsUsed />
+            <Footer />
         </>
     )
 }
