@@ -5,6 +5,7 @@ import { Request, Response } from "express"
 // @access  Public
 export async function registerUser(req: Request, res: Response) {
     console.log("Registered")
+    console.log(req.body)
 }
 
 // @desc    Login a user

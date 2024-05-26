@@ -11,6 +11,7 @@ import { RootState } from "../store"
 
 const Login = () => {
     const theme = useSelector((state: RootState) => state.theme.mode)
+
     return (
         <div
             className={`flex justify-center items-center h-screen ${theme === "dark" && "bg-base-300"}`}

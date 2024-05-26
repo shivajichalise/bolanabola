@@ -7,11 +7,40 @@ import {
 import InputText from "../components/InputText"
 import Button from "../components/Button"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
+import { useForm } from "react-hook-form"
+import { DevTool } from "@hookform/devtools"
+import TRegisterFormValues, {
+    registerUserSchema,
+} from "../types/RegisterFormValues"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRegisterMutation } from "../reducers/userReducers"
+import { setCredentials } from "../reducers/authReducers"
 
 const Register = () => {
     const theme = useSelector((state: RootState) => state.theme.mode)
+    const [signup, { isLoading }] = useRegisterMutation()
+    const dispatch = useDispatch()
+
+    const {
+        register,
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<TRegisterFormValues>({
+        resolver: zodResolver(registerUserSchema),
+    })
+
+    const onSubmit = (data: TRegisterFormValues) => {
+        try {
+            const res = signup(data).unwrap()
+            dispatch(setCredentials({ ...res }))
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div
             className={`flex justify-center items-center h-screen ${theme === "dark" && "bg-base-300"}`}
@@ -26,34 +55,52 @@ const Register = () => {
                     <span className="preeti text-6xl font-bold">a</span>
                     <span className="text-2xl font-bold">bolanabola</span>
                 </Link>
-                <form className="w-full">
+                <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
                     <InputText
                         type="text"
-                        name="name"
                         hasIcon={true}
                         icon={<IconUserFilled size={17} />}
                         placeholder="Name"
+                        {...register("name", {
+                            required: "Name is required",
+                        })}
+                        hasError={errors.name ? true : false}
+                        error={errors.name?.message}
                     />
                     <InputText
                         type="email"
-                        name="email"
                         hasIcon={true}
                         icon={<IconMailFilled size={17} />}
                         placeholder="Email"
+                        {...register("email", {
+                            required: "Email is required!",
+                        })}
+                        hasError={errors.email ? true : false}
+                        error={errors.email?.message}
                     />
                     <InputText
                         type="password"
-                        name="password"
                         hasIcon={true}
                         icon={<IconKeyFilled size={17} />}
                         placeholder="Password"
+                        {...register("password", {
+                            required: "Password is required!",
+                            minLength: 8,
+                        })}
+                        hasError={errors.password ? true : false}
+                        error={errors.password?.message}
                     />
                     <InputText
                         type="password"
-                        name="password_confirmation"
                         hasIcon={true}
                         icon={<IconKeyFilled size={17} />}
                         placeholder="Confirm password"
+                        {...register("password_confirmation", {
+                            required: "Please confirm your password!",
+                            minLength: 8,
+                        })}
+                        hasError={errors.password_confirmation ? true : false}
+                        error={errors.password_confirmation?.message}
                     />
                     <Button
                         style="default"
@@ -85,6 +132,7 @@ const Register = () => {
                     </Link>
                 </div>
             </div>
+            <DevTool control={control} />
         </div>
     )
 }

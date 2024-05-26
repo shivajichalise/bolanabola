@@ -1,24 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit"
-import User from "../types/User"
+import { api } from "../api"
 
-interface AuthState {
-    isSignedIn: boolean
-    jwt: string
-}
-
-interface UserState extends User, AuthState {}
-
-const initialState: UserState = {
-    name: "",
-    email: "",
-    isSignedIn: false,
-    jwt: "",
-}
-
-const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {},
+const userSlice = api.injectEndpoints({
+    endpoints: (build) => ({
+        login: build.mutation({
+            query: (data) => ({
+                url: "/api/login",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        register: build.mutation({
+            query: (data) => ({
+                url: "/api/register",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        logout: build.mutation({
+            query: () => ({
+                url: "/api/logout",
+                method: "POST",
+            }),
+        }),
+    }),
 })
 
-export default userSlice.reducer
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
+    userSlice
+export default userSlice
