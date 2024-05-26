@@ -4,7 +4,8 @@
     "description": "Backend for bolanabola",
     "main": "server.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "ts-node server.ts",
+        "server": "npx nodemon server.ts"
     },
     "repository": {
         "type": "git",
@@ -20,7 +21,10 @@
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",
         "express": "^4.19.2",
-        "express-validator": "^7.1.0"
+        "express-validator": "^7.1.0",
+        "pg": "^8.11.5",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.37.3"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",
