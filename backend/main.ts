@@ -20,7 +20,7 @@ app.use(
 connectDB()
 
 app.get("/api", (_, res) => {
-    return res.json({ message: "Running" }).status(200)
+    return res.json({ message: "Running on port 3000" }).status(200)
 })
 
 app.use("/api", authRoutes)

@@ -2,7 +2,6 @@ import {
     IconBrandGoogleFilled,
     IconKeyFilled,
     IconMailFilled,
-    IconUser,
     IconUserFilled,
 } from "@tabler/icons-react"
 import InputText from "../components/InputText"
