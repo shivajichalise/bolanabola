@@ -35,7 +35,7 @@ export default {
                     neutral: "#F6F6F7",
                     "neutral-content": "#E7E8EC",
                     info: "#1C7293",
-                    "info-content": "#1C7293",
+                    "info-content": "#196784",
                     success: "#52623A",
                     "success-content": "#fff",
                     warning: "#F19D5D",

@@ -1,41 +1,61 @@
-import InputSubmit from "../components/InputSubmit"
+import {
+    IconBrandGoogleFilled,
+    IconKeyFilled,
+    IconMailFilled,
+} from "@tabler/icons-react"
 import InputText from "../components/InputText"
-import LoginWithGoogleButton from "../components/LoginWithGoogleButton"
+import Button from "../components/Button"
+import { Link } from "react-router-dom"
 
 const Login = () => {
     return (
         <div className="flex justify-center items-center h-screen">
-            <div className="flex w-4/6 bg-base-300 rounded-lg">
-                <div className="hidden xl:block xl:w-1/2 min-h-full">
-                    <img
-                        className="h-full w-full object-cover rounded-l-lg"
-                        src="https://c.tenor.com/mXKb6EMxOjEAAAAC/tenor.gif"
-                        alt="Login page gif"
+            <div className="h-fit w-10/12 lg:w-1/4 bg-neutral p-5 flex flex-col justify-center items-center rounded-xl">
+                <a className="text-primary flex justify-center items-center">
+                    <span className="preeti text-6xl font-bold">a</span>
+                    <span className="text-2xl font-bold">bolanabola</span>
+                </a>
+                <form className="w-full">
+                    <InputText
+                        type="email"
+                        name="email"
+                        hasIcon={true}
+                        icon={<IconMailFilled size={17} />}
+                        placeholder="Email"
                     />
-                </div>
-                <div className="flex flex-col justify-center items-center w-full xl:w-1/2 p-8">
-                    <h1 className="font-bold text-2xl">Login</h1>
-                    <form className="w-full">
-                        <InputText
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            inputLabel="Email"
-                            required={true}
-                        />
-
-                        <InputText
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            inputLabel="Password"
-                            required={true}
-                        />
-
-                        <InputSubmit value="Submit" />
-
-                        <LoginWithGoogleButton />
-                    </form>
+                    <InputText
+                        type="password"
+                        name="password"
+                        hasIcon={true}
+                        icon={<IconKeyFilled size={17} />}
+                        placeholder="Password"
+                    />
+                    <Button
+                        style="primary"
+                        type="submit"
+                        size="sm"
+                        text="Login"
+                        className="w-full"
+                    />
+                    <Button
+                        style="primary"
+                        size="sm"
+                        type="link"
+                        href="https://google.com"
+                        hasIcon={true}
+                        icon={<IconBrandGoogleFilled size={20} />}
+                        text="Login with Google"
+                        className="w-full mt-2"
+                    />
+                </form>
+                <div className="flex flex-col justify-center items-center text-xs text-base-content my-3">
+                    <p className="">Don't have an account?</p>
+                    <Link
+                        to="/register"
+                        className="text-info hover:text-info-content hover:underline"
+                    >
+                        Create one
+                    </Link>
                 </div>
             </div>
         </div>

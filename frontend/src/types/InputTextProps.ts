@@ -1,15 +1,15 @@
-import { ChangeEvent, RefObject } from "react"
+import { ChangeEvent, ReactElement, RefObject } from "react"
 
 interface InputTextProps {
-    inputLabel?: string
-    hasLabel?: boolean
-    type?: "text" | string
+    type: "text" | "email" | "password" | "hidden" | string
     name: string
-    placeholder?: string
     id?: string
+    placeholder?: string
+    hasIcon?: boolean
+    icon?: ReactElement
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
     ref?: RefObject<HTMLInputElement>
-    required?: false | boolean
+    optional?: false | boolean
 }
 
 export default InputTextProps

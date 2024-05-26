@@ -2,44 +2,27 @@ import { forwardRef } from "react"
 import InputTextProps from "../types/InputTextProps"
 
 const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) => {
-    const {
-        type,
-        id,
-        name,
-        placeholder,
-        onChange,
-        hasLabel,
-        inputLabel,
-        required,
-    } = props
+    const { type, id, name, placeholder, onChange, hasIcon, icon, optional } =
+        props
 
     return (
-        <div className="w-full">
-            {hasLabel && (
-                <div className="m-1">
-                    <label className="text-xs"></label>
-                </div>
+        <label className="input flex items-center gap-2 bg-neutral-content text-primary my-3">
+            {hasIcon && icon}
+            <input
+                type={type}
+                className=""
+                placeholder={placeholder}
+                id={id}
+                name={name}
+                onChange={onChange}
+                ref={ref}
+            />
+            {optional && (
+                <span className="badge badge-sm badge-primary text-neutral text-xs">
+                    OPT
+                </span>
             )}
-            <label className="form-control w-full">
-                <div className="label">
-                    <span className="label-text">
-                        {inputLabel ?? name.toUpperCase()}{" "}
-                        {required && (
-                            <span className="text-error text-md">*</span>
-                        )}
-                    </span>
-                </div>
-                <input
-                    type={type}
-                    id={id}
-                    name={name}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    ref={ref}
-                    className="input input-bordered"
-                />
-            </label>
-        </div>
+        </label>
     )
 })
 
