@@ -6,7 +6,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) => {
         props
 
     return (
-        <label className="input flex items-center gap-2 bg-neutral-content text-primary my-3">
+        <label className="input flex items-center gap-2 bg-neutral-content text-default-primary my-3">
             {hasIcon && icon}
             <input
                 type={type}

@@ -7,6 +7,7 @@ import { store } from "./store.ts"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import ProtectRoute from "./utils/ProtectRoute.tsx"
 import Login from "./pages/Login.tsx"
+import Register from "./pages/Register.tsx"
 import LandingPage from "./pages/LandingPage.tsx"
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/register",
+        element: <Register />,
     },
 ])
 

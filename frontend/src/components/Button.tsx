@@ -12,7 +12,8 @@ const Button = (props: ButtonProps) => {
             bgColorClass = "btn-secondary"
             break
         default:
-            bgColorClass = "bg-default-primary hover:bg-default-primary-content"
+            bgColorClass =
+                "bg-default-primary hover:bg-default-primary-content border-0"
             break
     }
 

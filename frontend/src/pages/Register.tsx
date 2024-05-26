@@ -2,6 +2,8 @@ import {
     IconBrandGoogleFilled,
     IconKeyFilled,
     IconMailFilled,
+    IconUser,
+    IconUserFilled,
 } from "@tabler/icons-react"
 import InputText from "../components/InputText"
 import Button from "../components/Button"
@@ -9,7 +11,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../store"
 
-const Login = () => {
+const Register = () => {
     const theme = useSelector((state: RootState) => state.theme.mode)
     return (
         <div
@@ -27,6 +29,13 @@ const Login = () => {
                 </Link>
                 <form className="w-full">
                     <InputText
+                        type="text"
+                        name="name"
+                        hasIcon={true}
+                        icon={<IconUserFilled size={17} />}
+                        placeholder="Name"
+                    />
+                    <InputText
                         type="email"
                         name="email"
                         hasIcon={true}
@@ -40,11 +49,18 @@ const Login = () => {
                         icon={<IconKeyFilled size={17} />}
                         placeholder="Password"
                     />
+                    <InputText
+                        type="password"
+                        name="password_confirmation"
+                        hasIcon={true}
+                        icon={<IconKeyFilled size={17} />}
+                        placeholder="Confirm password"
+                    />
                     <Button
                         style="default"
                         type="submit"
                         size="sm"
-                        text="Login"
+                        text="Register"
                         className="w-full"
                     />
                     <Button
@@ -61,12 +77,12 @@ const Login = () => {
                 <div
                     className={`flex flex-col justify-center items-center text-xs ${theme === "dark" ? "text-default-primary" : "text-base-content"} my-3`}
                 >
-                    <p className="">Don't have an account?</p>
+                    <p className="">Already have an account?</p>
                     <Link
-                        to="/register"
+                        to="/login"
                         className="text-info hover:text-info-content hover:underline"
                     >
-                        Create one
+                        Login
                     </Link>
                 </div>
             </div>
@@ -74,4 +90,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

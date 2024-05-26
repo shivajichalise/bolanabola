@@ -26,9 +26,9 @@ const Hero = () => {
                         style="default"
                         size="sm"
                         type="link"
-                        href="https://google.com"
+                        href="/register"
                         hasIcon={false}
-                        text="Get started"
+                        text="Sign up"
                         className="my-5"
                     />
                 </div>
