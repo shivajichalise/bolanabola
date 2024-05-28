@@ -24,7 +24,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) => {
                 {hasIcon && icon}
                 <input
                     type={type}
-                    className=""
+                    className="w-full h-full"
                     placeholder={placeholder}
                     id={id}
                     name={name}

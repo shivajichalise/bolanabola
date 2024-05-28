@@ -2,7 +2,7 @@ import { z } from "zod"
 
 const registerUserSchema = z
     .object({
-        name: z.string(),
+        name: z.string().min(1, "Name is required."),
         email: z.string().email(),
         password: z.string().min(8, "Password must be at least 8 characters."),
         password_confirmation: z.string().min(8, "Password do not match."),

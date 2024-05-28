@@ -27,3 +27,20 @@ html {
   font-family: "Preeti";
 }
 
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #577399;
+  -webkit-box-shadow: transparent;
+  box-shadow: transparent;
+  transition: background-color 5000s ease-in-out 0s;
+  color: #577399;
+}

@@ -13,7 +13,7 @@ export default {
             "text-300": "#577399",
         },
     },
-    plugins: [daisyui],
+    plugins: [daisyui, "tailwindcss", "autoprefixer"],
 
     daisyui: {
         themes: [
