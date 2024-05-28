@@ -43,7 +43,11 @@ export async function registerUser(req: Request, res: Response) {
 // @route   Post /api/login
 // @access  Public
 export async function loginUser(req: Request, res: Response) {
-    res.sendStatus(200)
+    res.status(200).json({
+        message: "Logged in successfully.",
+        user: req.user,
+        isSignedIn: true,
+    })
 }
 
 // @desc    Logout a user
@@ -76,4 +80,20 @@ export function validateLoginRequest(
     }
 
     next()
+}
+
+export async function getCurrentUser(req: Request, res: Response) {
+    return res.status(200).json({ user: req.user, isSignedIn: true })
+}
+
+export async function isSignedIn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    if (req.user) {
+        next()
+    } else {
+        return res.status(401).json({ user: {}, isSignedIn: false })
+    }
 }

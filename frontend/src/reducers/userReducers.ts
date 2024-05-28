@@ -1,4 +1,10 @@
 import { api } from "../api"
+import User from "../types/User"
+
+interface LoggedInUser {
+    user: User | {}
+    isSigendIn: true | false
+}
 
 const userSlice = api.injectEndpoints({
     endpoints: (build) => ({
@@ -22,9 +28,20 @@ const userSlice = api.injectEndpoints({
                 method: "POST",
             }),
         }),
+        isLoggedIn: build.mutation<LoggedInUser, void>({
+            query: () => ({
+                url: "/api/is-signed-in",
+                method: "GET",
+                credentials: "include",
+            }),
+        }),
     }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } =
-    userSlice
+export const {
+    useLoginMutation,
+    useRegisterMutation,
+    useLogoutMutation,
+    useIsLoggedInMutation,
+} = userSlice
 export default userSlice

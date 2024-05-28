@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../store"
 import { useForm } from "react-hook-form"
-import { DevTool } from "@hookform/devtools"
 import TRegisterFormValues, {
     registerUserSchema,
 } from "../types/RegisterFormValues"
@@ -26,7 +25,6 @@ const Register = () => {
 
     const {
         register,
-        control,
         handleSubmit,
         formState: { errors },
     } = useForm<TRegisterFormValues>({
@@ -151,7 +149,6 @@ const Register = () => {
                     </Link>
                 </div>
             </div>
-            <DevTool control={control} />
         </div>
     )
 }

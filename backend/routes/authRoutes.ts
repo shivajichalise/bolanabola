@@ -4,6 +4,8 @@ import {
     registerUser,
     logoutUser,
     validateLoginRequest,
+    getCurrentUser,
+    isSignedIn,
 } from "../controllers/authController"
 import { body } from "express-validator"
 import passport from "passport"
@@ -40,5 +42,7 @@ router.post(
 )
 
 router.post("/logout", logoutUser)
+
+router.get("/is-signed-in", isSignedIn, getCurrentUser)
 
 export default router

@@ -3,13 +3,18 @@ import { Strategy } from "passport-local"
 import { emailExists } from "../controllers/userController"
 import User from "../models/User"
 import bcrypt from "bcryptjs"
+import TUserSchema from "../types/UserType"
 
-passport.serializeUser((user, done) => {
-    done(null, user)
+passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+        return cb(null, user)
+    })
 })
 
-passport.deserializeUser((user, done) => {
-    done(user)
+passport.deserializeUser(function (user: TUserSchema, cb) {
+    process.nextTick(function () {
+        return cb(null, user)
+    })
 })
 
 export default passport.use(
@@ -27,6 +32,7 @@ export default passport.use(
                     where: {
                         email: username,
                     },
+                    attributes: ["id", "name", "email", "password"],
                 })
 
                 if (user) {
@@ -38,9 +44,10 @@ export default passport.use(
                     )
 
                     if (isPasswordValid) {
+                        delete user.dataValues.password
                         done(null, user)
                     } else {
-                        throw new Error("Invalid credentialss.")
+                        throw new Error("Invalid credentials.")
                     }
                 }
             } catch (err) {
