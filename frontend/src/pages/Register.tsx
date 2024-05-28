@@ -6,8 +6,8 @@ import {
 } from "@tabler/icons-react"
 import InputText from "../components/InputText"
 import Button from "../components/Button"
-import { Link } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 import { RootState } from "../store"
 import { useForm } from "react-hook-form"
 import { DevTool } from "@hookform/devtools"
@@ -16,12 +16,13 @@ import TRegisterFormValues, {
 } from "../types/RegisterFormValues"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRegisterMutation } from "../reducers/userReducers"
-import { setCredentials } from "../reducers/authReducers"
+import { toast } from "sonner"
+import { useEffect } from "react"
 
 const Register = () => {
     const theme = useSelector((state: RootState) => state.theme.mode)
-    const [signup, { isLoading }] = useRegisterMutation()
-    const dispatch = useDispatch()
+    const [signup, { isLoading, error }] = useRegisterMutation()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -32,14 +33,30 @@ const Register = () => {
         resolver: zodResolver(registerUserSchema),
     })
 
-    const onSubmit = (data: TRegisterFormValues) => {
-        try {
-            const res = signup(data).unwrap()
-            dispatch(setCredentials({ ...res }))
-        } catch (err) {
-            console.log(err)
+    const onSubmit = async (data: TRegisterFormValues) => {
+        const res = await signup(data)
+
+        if (res.data) {
+            toast.success(res.data.message, { duration: 1500 })
+            setTimeout(() => {
+                navigate("/login")
+            }, 2000)
         }
     }
+
+    useEffect(() => {
+        if (error) {
+            if ("status" in error) {
+                // you can access all properties of `FetchBaseQueryError` here
+                const errMsg =
+                    typeof error.data === "string"
+                        ? JSON.parse(error.data)
+                        : error.data
+
+                toast.error(errMsg.error)
+            }
+        }
+    }, [error])
 
     return (
         <div
@@ -102,12 +119,14 @@ const Register = () => {
                         hasError={errors.password_confirmation ? true : false}
                         error={errors.password_confirmation?.message}
                     />
+
                     <Button
                         style="default"
                         type="submit"
                         size="sm"
                         text="Register"
                         className="w-full"
+                        isLoading={isLoading}
                     />
                     <Button
                         style="default"

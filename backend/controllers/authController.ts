@@ -21,7 +21,7 @@ export async function registerUser(req: Request, res: Response) {
     const userExists = await emailExists(email)
 
     if (userExists) {
-        return res.status(409).json({ message: "Email already exists." })
+        return res.status(409).json({ error: "Email already exists." })
     }
 
     const salt = await bcrypt.genSalt(10)
@@ -33,7 +33,7 @@ export async function registerUser(req: Request, res: Response) {
         password: hashedPassword,
     })
 
-    return res.json({
+    return res.status(201).json({
         message: "Registered successfully.",
         user: user.toJSON(),
     })

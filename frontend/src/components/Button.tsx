@@ -42,15 +42,25 @@ const Button = (props: ButtonProps) => {
     const className = `btn ${btnSize} ${bgColorClass} text-text-200 text-sm ${props.className}`
 
     return props.type === "link" ? (
-        <Link to={props.href!} className={className}>
-            {props.hasIcon && props.icon}
-            {props.text}
-        </Link>
+        <>
+            <Link to={props.href!} className={className}>
+                {props.isLoading && (
+                    <span className="loading loading-spinner loading-xs"></span>
+                )}
+                {props.hasIcon && props.icon}
+                {props.text}
+            </Link>
+        </>
     ) : (
-        <button type={props.type} className={className}>
-            {props.hasIcon && props.icon}
-            {props.text}
-        </button>
+        <>
+            <button type={props.type} className={className}>
+                {props.isLoading && (
+                    <span className="loading loading-spinner loading-xs"></span>
+                )}
+                {props.hasIcon && props.icon}
+                {props.text}
+            </button>
+        </>
     )
 }
 

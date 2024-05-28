@@ -4,7 +4,6 @@ import User from "../types/User"
 interface UserState {
     user: User | null
     isSignedIn: boolean
-    jwt: string
 }
 
 const initialState: UserState = {
@@ -12,7 +11,6 @@ const initialState: UserState = {
         ? JSON.parse(localStorage.getItem("USER")!)
         : null,
     isSignedIn: false,
-    jwt: "",
 }
 
 const authSlice = createSlice({

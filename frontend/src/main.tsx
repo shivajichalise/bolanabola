@@ -11,6 +11,7 @@ import Register from "./pages/Register.tsx"
 import LandingPage from "./pages/LandingPage.tsx"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import GuestPage from "./pages/GuestPage.tsx"
 
 const router = createBrowserRouter([
     {
@@ -26,12 +27,18 @@ const router = createBrowserRouter([
         element: <LandingPage />,
     },
     {
-        path: "/login",
-        element: <Login />,
-    },
-    {
-        path: "/register",
-        element: <Register />,
+        path: "/",
+        element: <GuestPage />,
+        children: [
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+        ],
     },
 ])
 

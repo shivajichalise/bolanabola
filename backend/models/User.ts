@@ -26,6 +26,18 @@ const User = sequelize.define(
     },
     {
         tableName: "users",
+        hooks: {
+            afterCreate: (record) => {
+                delete record.dataValues.password
+                delete record.dataValues.createdAt
+                delete record.dataValues.updatedAt
+            },
+            afterUpdate: (record) => {
+                delete record.dataValues.password
+                delete record.dataValues.createdAt
+                delete record.dataValues.updatedAt
+            },
+        },
     }
 )
 

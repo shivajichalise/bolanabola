@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 type ProtectRouteProps = PropsWithChildren
 
 export default function ProtectRoute({ children }: ProtectRouteProps) {
-    const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn)
+    const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn)
     const navigate = useNavigate()
 
     useEffect(() => {
