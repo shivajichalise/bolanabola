@@ -11,14 +11,14 @@ const Conversation = sequelize.define(
             primaryKey: true,
         },
         from_user: {
-            type: DataTypes.UUIDV4,
+            type: DataTypes.UUID,
             references: {
                 model: User,
                 key: "id",
             },
         },
         to_user: {
-            type: DataTypes.UUIDV4,
+            type: DataTypes.UUID,
             references: {
                 model: User,
                 key: "id",

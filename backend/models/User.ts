@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize"
 import { sequelize } from "../config/db"
-import Conversation from "./Conversation"
 
 const User = sequelize.define(
     "User",

@@ -1,17 +1,20 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Navbar from "./components/Navbar"
 import NavbarProps from "./types/NavbarProps"
 import { RootState } from "./store"
 import InputText from "./components/InputText"
-import { IconSend2, IconUser } from "@tabler/icons-react"
+import { IconSend2, IconUser, IconUserPlus } from "@tabler/icons-react"
 import IconButton from "./components/IconButton"
 import ChatBubble from "./components/ChatBubble"
-import { useEffect, useRef } from "react"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { useAddFriendMutation } from "../src/slices/addFriendSlice"
+import { Toaster, toast } from "sonner"
 
 function App() {
     const navLinks: NavbarProps["menus"] = []
     const theme = useSelector((state: RootState) => state.theme.mode)
     const messageEl = useRef<HTMLDivElement>(null)
+    const [addFriend, { isLoading, error }] = useAddFriendMutation()
 
     const scrollToBottom = () => {
         if (messageEl.current) {
@@ -32,6 +35,37 @@ function App() {
     useEffect(() => {
         scrollToBottom() // Scroll to bottom on component mount
     }, [])
+
+    const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(true)
+
+    const toggleModal = () => {
+        setIsAddFriendModalOpen(!isAddFriendModalOpen)
+    }
+
+    const [addFriendEmail, setAddFriendEmail] = useState<string>("")
+
+    const trackEmail = (e: ChangeEvent<HTMLInputElement>) => {
+        setAddFriendEmail(e.target.value)
+    }
+
+    const addFriendHandler = async () => {
+        const res = await addFriend({ email: addFriendEmail }).unwrap()
+        console.log(res)
+    }
+
+    useEffect(() => {
+        if (error) {
+            if ("status" in error) {
+                // you can access all properties of `FetchBaseQueryError` here
+                const errMsg =
+                    typeof error.data === "string"
+                        ? JSON.parse(error.data)
+                        : error.data
+
+                toast.error(errMsg.error)
+            }
+        }
+    }, [error])
 
     return (
         <>
@@ -145,6 +179,41 @@ function App() {
                     </div>
                 </div>
             </div>
+            <div className="fixed bottom-0 left-0 p-5">
+                <IconButton type="primary" onClick={toggleModal}>
+                    <IconUserPlus size={17} />
+                </IconButton>
+            </div>
+
+            <div className={`modal ${isAddFriendModalOpen && "modal-open"}`}>
+                <div className="modal-box">
+                    <button
+                        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-neutral"
+                        onClick={toggleModal}
+                    >
+                        ✕
+                    </button>
+                    <h3 className="text-lg font-bold text-neutral">
+                        Add a friend
+                    </h3>
+                    <InputText
+                        type="email"
+                        name="email"
+                        placeholder="Enter your friend's email"
+                        onChange={trackEmail}
+                    />
+                    <button
+                        className="btn btn-primary btn-sm text-text-200"
+                        onClick={addFriendHandler}
+                    >
+                        Add
+                    </button>
+                </div>
+                <label className="modal-backdrop" onClick={toggleModal}>
+                    Close
+                </label>
+            </div>
+            <Toaster richColors />
         </>
     )
 }

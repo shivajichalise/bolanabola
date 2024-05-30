@@ -3,6 +3,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 import authRoutes from "./routes/authRoutes"
+import friendRoutes from "./routes/friendRoutes"
 import { connectDB } from "./config/db"
 import session, { SessionOptions } from "express-session"
 import passport from "passport"
@@ -50,5 +51,6 @@ app.get("/api", (_, res) => {
 })
 
 app.use("/api", authRoutes)
+app.use("/api/friends", friendRoutes)
 
 export default app

@@ -39,6 +39,12 @@ html {
   font-family: "Preeti";
 }
 
+/* added this to remove weird space when I open the model in App.tsx */
+body::-webkit-scrollbar 
+{
+    display: none;
+}
+
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
