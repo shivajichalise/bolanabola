@@ -1,40 +1,45 @@
 import { DataTypes } from "sequelize"
 import { sequelize } from "../config/db"
+import User from "./User"
 import Conversation from "./Conversation"
 
-const User = sequelize.define(
-    "User",
+const Message = sequelize.define(
+    "Message",
     {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        // Model attributes are defined here
-        name: {
-            type: DataTypes.STRING,
+        conversation_id: {
+            type: DataTypes.UUIDV4,
+            references: {
+                model: User,
+                key: "id",
+            },
             allowNull: false,
         },
-        email: {
-            type: DataTypes.STRING,
+        from_user: {
+            type: DataTypes.UUIDV4,
+            references: {
+                model: User,
+                key: "id",
+            },
             allowNull: false,
-            unique: true,
         },
-        password: {
-            type: DataTypes.STRING,
+        message: {
+            type: DataTypes.TEXT("long"),
             allowNull: false,
         },
     },
     {
-        tableName: "users",
+        tableName: "messages",
         hooks: {
             afterCreate: (record) => {
-                delete record.dataValues.password
                 delete record.dataValues.createdAt
                 delete record.dataValues.updatedAt
             },
             afterUpdate: (record) => {
-                delete record.dataValues.password
                 delete record.dataValues.createdAt
                 delete record.dataValues.updatedAt
             },
@@ -42,6 +47,10 @@ const User = sequelize.define(
     }
 )
 
-User.sync({ alter: true })
+Message.belongsTo(Conversation, {
+    foreignKey: "conversation_id",
+    as: "Conversation",
+})
 
-export default User
+Message.sync({ alter: true })
+export default Message
