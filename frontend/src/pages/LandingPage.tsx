@@ -4,9 +4,14 @@ import Navbar from "../components/Navbar"
 import ToolsUsed from "../components/ToolsUsed"
 
 function LandingPage() {
+    const navLinks = [
+        { label: "Home", link: "#home" },
+        { label: "Features", link: "#features" },
+        { label: "Details", link: "#details" },
+    ]
     return (
         <>
-            <Navbar />
+            <Navbar menus={navLinks} />
             <Hero />
             <ToolsUsed />
             <Footer />
