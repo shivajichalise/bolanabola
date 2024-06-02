@@ -36,7 +36,7 @@ function App() {
         scrollToBottom() // Scroll to bottom on component mount
     }, [])
 
-    const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(true)
+    const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false)
 
     const toggleModal = () => {
         setIsAddFriendModalOpen(!isAddFriendModalOpen)

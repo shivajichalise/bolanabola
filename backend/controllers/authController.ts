@@ -60,7 +60,7 @@ export async function logoutUser(req: Request, res: Response) {
 
     req.logout((err) => {
         if (err) {
-            return res.status(400)
+            return res.status(400).json({ error: err })
         }
         return res.status(200).json({ message: "Logged out." })
     })

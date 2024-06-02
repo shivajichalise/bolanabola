@@ -10,12 +10,17 @@ import Button from "./Button"
 import VerticalDivider from "./VerticalDivider"
 import { useState } from "react"
 import NavbarProps from "../types/NavbarProps"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
+import { useLogoutMutation } from "../reducers/userReducers"
+import { clearCredentials } from "../reducers/authReducers"
 
 const Navbar = (props: NavbarProps) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
     const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn)
+
+    const [logout, { isLoading, error }] = useLogoutMutation()
+    const dispatch = useDispatch()
 
     const { menus: navLinks } = props
 
@@ -25,6 +30,11 @@ const Navbar = (props: NavbarProps) => {
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false)
+    }
+
+    const handleLogout = async () => {
+        await logout({}).unwrap()
+        dispatch(clearCredentials())
     }
 
     return (
@@ -157,7 +167,7 @@ const Navbar = (props: NavbarProps) => {
                                             <a>Settings</a>
                                         </li>
                                         <li>
-                                            <a>Logout</a>
+                                            <a onClick={handleLogout}>Logout</a>
                                         </li>
                                     </ul>
                                 </div>
