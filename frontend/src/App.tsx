@@ -9,12 +9,22 @@ import ChatBubble from "./components/ChatBubble"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { useAddFriendMutation } from "../src/slices/addFriendSlice"
 import { Toaster, toast } from "sonner"
+import { useQuery } from "@tanstack/react-query"
+import {
+    Conversation,
+    useConversationMutation,
+} from "./slices/conversationSlice"
 
 function App() {
     const navLinks: NavbarProps["menus"] = []
     const theme = useSelector((state: RootState) => state.theme.mode)
+    const user = useSelector((state: RootState) => state.auth.user)
     const messageEl = useRef<HTMLDivElement>(null)
     const [addFriend, { isLoading, error }] = useAddFriendMutation()
+    const [
+        fetchConversations,
+        { isLoading: isConversationLoading, error: conversationError },
+    ] = useConversationMutation()
 
     const scrollToBottom = () => {
         if (messageEl.current) {
@@ -67,6 +77,16 @@ function App() {
         }
     }, [error])
 
+    const getConversations = async () => {
+        const res = await fetchConversations().unwrap()
+        return res.conversations
+    }
+
+    const conversations = useQuery({
+        queryFn: () => getConversations(),
+        queryKey: ["conversations"],
+    })
+
     return (
         <>
             <Navbar menus={navLinks} />
@@ -85,16 +105,31 @@ function App() {
                             />
                         </div>
                         <div className="flex flex-col pl-4 pr-4 pb-4 overflow-y-scroll no-scrollbar">
-                            <div className="rounded-lg my-2 flex justify-start items-center p-3 bg-default-secondary hover:bg-default-secondary-content cursor-pointer">
-                                <div className="avatar online mr-3">
-                                    <div className="w-10 rounded-full">
-                                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                    </div>
-                                </div>
-                                <h1 className="text-xl font-semibold ">
-                                    Yakeen Kapali
-                                </h1>
-                            </div>
+                            {isConversationLoading ? (
+                                <span className="loading loading-spinner loading-md"></span>
+                            ) : (
+                                conversations?.data?.map(
+                                    (conversation: Conversation) => (
+                                        <div
+                                            className="rounded-lg my-2 flex justify-start items-center p-3 bg-default-secondary hover:bg-default-secondary-content cursor-pointer"
+                                            key={conversation.id}
+                                        >
+                                            <div className="avatar online mr-3">
+                                                <div className="w-10 rounded-full">
+                                                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                                </div>
+                                            </div>
+                                            <h1 className="text-xl font-semibold ">
+                                                {conversation.FromUser.id ===
+                                                user?.id
+                                                    ? conversation.ToUser.name
+                                                    : conversation.FromUser
+                                                          .name}
+                                            </h1>
+                                        </div>
+                                    )
+                                )
+                            )}
                         </div>
                     </div>
                     <div className="bg-neutral rounded-lg h-5/6 w-3/5 text-default-primary flex flex-col justify-between">

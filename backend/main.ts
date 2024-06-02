@@ -4,6 +4,7 @@ import bodyParser from "body-parser"
 import cors from "cors"
 import authRoutes from "./routes/authRoutes"
 import friendRoutes from "./routes/friendRoutes"
+import conversationRoutes from "./routes/conversationRoutes"
 import { connectDB } from "./config/db"
 import session, { SessionOptions } from "express-session"
 import passport from "passport"
@@ -52,5 +53,6 @@ app.get("/api", (_, res) => {
 
 app.use("/api", authRoutes)
 app.use("/api/friends", friendRoutes)
+app.use("/api/conversations", conversationRoutes)
 
 export default app
