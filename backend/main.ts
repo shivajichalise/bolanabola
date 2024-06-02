@@ -5,6 +5,7 @@ import cors from "cors"
 import authRoutes from "./routes/authRoutes"
 import friendRoutes from "./routes/friendRoutes"
 import conversationRoutes from "./routes/conversationRoutes"
+import messageRoutes from "./routes/messageRoutes"
 import { connectDB } from "./config/db"
 import session, { SessionOptions } from "express-session"
 import passport from "passport"
@@ -12,7 +13,6 @@ import cookieParser from "cookie-parser"
 import "dotenv/config"
 
 const app = express()
-
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -54,5 +54,6 @@ app.get("/api", (_, res) => {
 app.use("/api", authRoutes)
 app.use("/api/friends", friendRoutes)
 app.use("/api/conversations", conversationRoutes)
+app.use("/api/messages", messageRoutes)
 
 export default app

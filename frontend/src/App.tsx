@@ -12,6 +12,7 @@ import { Toaster, toast } from "sonner"
 import { useQuery } from "@tanstack/react-query"
 import {
     Conversation,
+    Message,
     useFetchConversationsMutation,
     useFetchMessagesMutation,
 } from "./slices/conversationSlice"
@@ -85,6 +86,7 @@ function App() {
 
     const getConversations = async () => {
         const res = await fetchConversations().unwrap()
+        setConversationId(res.conversations[0].id)
         return res.conversations
     }
 
@@ -94,19 +96,26 @@ function App() {
     })
 
     const [conversationId, setConversationId] = useState<string>("")
+    const [conversationPersonName, setConversationPersonName] =
+        useState<string>("")
+
+    const [messages, setMessages] = useState<Message[]>([])
 
     const fetchMessagesHandler = async (conversationId: string) => {
         const res = await fetchMessages({
             conversation_id: conversationId,
         }).unwrap()
-        console.log(res.messages)
-        return res.messages
+        setMessages(res.messages)
     }
 
-    const messages = useQuery({
-        queryFn: () => fetchMessagesHandler(conversationId),
-        queryKey: ["messages", { conversationId }],
-    })
+    const conversationClickHandler = (
+        conversationId: string,
+        conversationPersonName: string
+    ) => {
+        setConversationId(conversationId)
+        setConversationPersonName(conversationPersonName)
+        fetchMessagesHandler(conversationId)
+    }
 
     return (
         <>
@@ -135,8 +144,14 @@ function App() {
                                             className="rounded-lg my-2 flex justify-start items-center p-3 bg-default-secondary hover:bg-default-secondary-content cursor-pointer"
                                             key={conversation.id}
                                             onClick={() =>
-                                                fetchMessagesHandler(
-                                                    conversation.id
+                                                conversationClickHandler(
+                                                    conversation.id,
+                                                    conversation.FromUser.id ===
+                                                        user?.id
+                                                        ? conversation.ToUser
+                                                              .name
+                                                        : conversation.FromUser
+                                                              .name
                                                 )
                                             }
                                         >
@@ -160,64 +175,35 @@ function App() {
                     </div>
                     <div className="bg-neutral rounded-lg h-5/6 w-3/5 text-default-primary flex flex-col justify-between">
                         <div className="rounded-lg flex justify-start items-center p-3 bg-neutral-content">
-                            <div className="avatar mr-3">
-                                <div className="w-10 rounded-full">
-                                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                </div>
-                            </div>
-                            <h1 className="text-xl font-semibold ">
-                                Yakeen Kapali
-                            </h1>
+                            {conversationPersonName !== "" && (
+                                <>
+                                    <div className="avatar mr-3">
+                                        <div className="w-10 rounded-full">
+                                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        </div>
+                                    </div>
+                                    <h1 className="text-xl font-semibold ">
+                                        {conversationPersonName}
+                                    </h1>
+                                </>
+                            )}
                         </div>
 
                         <div
                             className="flex flex-col p-3 h-full overflow-y-scroll"
                             ref={messageEl}
                         >
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble message="Sir kata ho?" />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
-                            <ChatBubble
-                                position="end"
-                                message="ghar mai ho yar"
-                            />
+                            {messages.map((message) => (
+                                <ChatBubble
+                                    position={
+                                        message.from_user == user?.id
+                                            ? "end"
+                                            : "start"
+                                    }
+                                    message={message.message}
+                                    key={message.id}
+                                />
+                            ))}
                         </div>
 
                         <div className="flex justify-around items-center p-4">

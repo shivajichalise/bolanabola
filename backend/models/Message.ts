@@ -14,7 +14,7 @@ const Message = sequelize.define(
         conversation_id: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: Conversation,
                 key: "id",
             },
             allowNull: false,

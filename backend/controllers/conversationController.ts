@@ -11,7 +11,6 @@ import Message from "../models/Message"
 export async function fetch(req: Request, res: Response) {
     const user = req.user as TUserSchema
 
-    console.log(user)
     const conversations = await Conversation.findAll({
         where: {
             [Op.or]: [
@@ -53,4 +52,20 @@ export async function fetchMessages(req: Request, res: Response) {
     })
 
     return res.status(200).json({ messages: messages })
+}
+
+// @desc    Store of a conversation
+// @route   Post /api/messages/create
+// @access  Private
+export async function storeMessage(req: Request, res: Response) {
+    const { conversation_id, message } = req.body
+    const user = req.user as TUserSchema
+
+    const messages = await Message.create({
+        conversation_id: conversation_id,
+        message: message,
+        from_user: user.id,
+    })
+
+    return res.status(200).json({ message: messages })
 }

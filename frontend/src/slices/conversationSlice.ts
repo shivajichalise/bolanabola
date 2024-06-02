@@ -17,8 +17,8 @@ export interface Message {
     id: string
     conversation_id: string
     from_user: string
-    message: User
-    createdAt: User
+    message: string
+    createdAt: Date
 }
 
 type Messages = {
