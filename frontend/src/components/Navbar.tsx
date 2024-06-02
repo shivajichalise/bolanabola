@@ -18,6 +18,7 @@ import { clearCredentials } from "../reducers/authReducers"
 const Navbar = (props: NavbarProps) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
     const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn)
+    const theme = useSelector((state: RootState) => state.theme.mode)
 
     const [logout, { isLoading, error }] = useLogoutMutation()
     const dispatch = useDispatch()
@@ -153,12 +154,14 @@ const Navbar = (props: NavbarProps) => {
                                     </div>
                                     <ul
                                         tabIndex={0}
-                                        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                                        className={`mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content ${theme === "dark" ? "bg-base-200" : "bg-primary"} rounded-box w-52 text-neutral`}
                                     >
                                         <li>
                                             <a className="justify-between">
                                                 Profile
-                                                <span className="badge">
+                                                <span
+                                                    className={`badge ${theme === "dark" ? "bg-base-100" : "bg-neutral"}`}
+                                                >
                                                     New
                                                 </span>
                                             </a>
