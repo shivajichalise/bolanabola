@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize"
 import { sequelize } from "../config/db"
 import User from "./User"
+import Message from "./Message"
 
 const Conversation = sequelize.define(
     "Conversation",
@@ -47,6 +48,11 @@ User.hasMany(Conversation, { foreignKey: "from_user", as: "SentConversations" })
 User.hasMany(Conversation, {
     foreignKey: "to_user",
     as: "ReceivedConversations",
+})
+
+Message.belongsTo(Conversation, {
+    foreignKey: "conversation_id",
+    as: "Conversation",
 })
 
 Conversation.sync({ alter: true })

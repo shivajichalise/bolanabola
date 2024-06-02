@@ -13,11 +13,30 @@ type Conversations = {
     conversations: Conversation[]
 }
 
+export interface Message {
+    id: string
+    conversation_id: string
+    from_user: string
+    message: User
+    createdAt: User
+}
+
+type Messages = {
+    messages: Message[]
+}
+
 const conversationSlice = api.injectEndpoints({
     endpoints: (build) => ({
-        conversation: build.mutation<Conversations, void>({
+        fetchConversations: build.mutation<Conversations, void>({
             query: (data) => ({
                 url: "/api/conversations",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        fetchMessages: build.mutation<Messages, { conversation_id: string }>({
+            query: (data) => ({
+                url: "/api/messages",
                 method: "POST",
                 body: data,
             }),
@@ -25,6 +44,7 @@ const conversationSlice = api.injectEndpoints({
     }),
 })
 
-export const { useConversationMutation } = conversationSlice
+export const { useFetchConversationsMutation, useFetchMessagesMutation } =
+    conversationSlice
 
 export default conversationSlice

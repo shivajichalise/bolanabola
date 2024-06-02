@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import Navbar from "./components/Navbar"
 import NavbarProps from "./types/NavbarProps"
 import { RootState } from "./store"
@@ -12,7 +12,8 @@ import { Toaster, toast } from "sonner"
 import { useQuery } from "@tanstack/react-query"
 import {
     Conversation,
-    useConversationMutation,
+    useFetchConversationsMutation,
+    useFetchMessagesMutation,
 } from "./slices/conversationSlice"
 
 function App() {
@@ -24,7 +25,12 @@ function App() {
     const [
         fetchConversations,
         { isLoading: isConversationLoading, error: conversationError },
-    ] = useConversationMutation()
+    ] = useFetchConversationsMutation()
+
+    const [
+        fetchMessages,
+        { isLoading: isMessageLoading, error: messageError },
+    ] = useFetchMessagesMutation()
 
     const scrollToBottom = () => {
         if (messageEl.current) {
@@ -87,6 +93,21 @@ function App() {
         queryKey: ["conversations"],
     })
 
+    const [conversationId, setConversationId] = useState<string>("")
+
+    const fetchMessagesHandler = async (conversationId: string) => {
+        const res = await fetchMessages({
+            conversation_id: conversationId,
+        }).unwrap()
+        console.log(res.messages)
+        return res.messages
+    }
+
+    const messages = useQuery({
+        queryFn: () => fetchMessagesHandler(conversationId),
+        queryKey: ["messages", { conversationId }],
+    })
+
     return (
         <>
             <Navbar menus={navLinks} />
@@ -113,6 +134,11 @@ function App() {
                                         <div
                                             className="rounded-lg my-2 flex justify-start items-center p-3 bg-default-secondary hover:bg-default-secondary-content cursor-pointer"
                                             key={conversation.id}
+                                            onClick={() =>
+                                                fetchMessagesHandler(
+                                                    conversation.id
+                                                )
+                                            }
                                         >
                                             <div className="avatar online mr-3">
                                                 <div className="w-10 rounded-full">
