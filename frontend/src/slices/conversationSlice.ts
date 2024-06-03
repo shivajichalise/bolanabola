@@ -41,10 +41,23 @@ const conversationSlice = api.injectEndpoints({
                 body: data,
             }),
         }),
+        sendMessage: build.mutation<
+            Message,
+            { conversation_id: string; message: string }
+        >({
+            query: (data) => ({
+                url: "/api/messages/create",
+                method: "POST",
+                body: data,
+            }),
+        }),
     }),
 })
 
-export const { useFetchConversationsMutation, useFetchMessagesMutation } =
-    conversationSlice
+export const {
+    useFetchConversationsMutation,
+    useFetchMessagesMutation,
+    useSendMessageMutation,
+} = conversationSlice
 
 export default conversationSlice

@@ -32,6 +32,7 @@
         "pg": "^8.11.5",
         "pg-hstore": "^2.3.4",
         "sequelize": "^6.37.3",
+        "socket.io": "^4.7.5",
         "zod": "^3.23.8"
     },
     "devDependencies": {
@@ -44,5 +45,9 @@
         "@types/passport-local": "^1.0.38",
         "nodemon": "^3.1.0",
         "ts-node": "^10.9.2"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.8",
+        "utf-8-validate": "^5.0.10"
     }
 }

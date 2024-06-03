@@ -11,8 +11,47 @@ import session, { SessionOptions } from "express-session"
 import passport from "passport"
 import cookieParser from "cookie-parser"
 import "dotenv/config"
+import { Server } from "socket.io"
+
+type OnlineUsers = {
+    userId: string
+    socketId: string
+}[]
 
 const app = express()
+const io = new Server(3001, {
+    cors: {
+        origin: process.env.APP_URL,
+    },
+})
+
+let onlineUsers: OnlineUsers = []
+
+io.on("connection", (socket) => {
+    socket.on("new_user", (userId) => {
+        !onlineUsers.some((user) => user.userId === userId) &&
+            onlineUsers.push({ userId, socketId: socket.id })
+    })
+
+    socket.on("send_message", (message) => {
+        console.log("MESSAGE", message)
+        console.log("Online users: ", onlineUsers)
+        console.log(
+            "conversationRecipientId: ",
+            message.conversationRecipientId
+        )
+        const user = onlineUsers.find(
+            (onlineUser) =>
+                onlineUser.userId === message.conversationRecipientId
+        )
+        console.log("USER", user)
+
+        if (user) {
+            socket.to(user.socketId).emit("receive_message", message)
+        }
+    })
+})
+
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

@@ -15,7 +15,9 @@ import {
     Message,
     useFetchConversationsMutation,
     useFetchMessagesMutation,
+    useSendMessageMutation,
 } from "./slices/conversationSlice"
+import { socket } from "./socket"
 
 function App() {
     const navLinks: NavbarProps["menus"] = []
@@ -32,6 +34,11 @@ function App() {
         fetchMessages,
         { isLoading: isMessageLoading, error: messageError },
     ] = useFetchMessagesMutation()
+
+    const [
+        sendMessage,
+        { isLoading: isMessageSending, error: sendMessageError },
+    ] = useSendMessageMutation()
 
     const scrollToBottom = () => {
         if (messageEl.current) {
@@ -98,6 +105,8 @@ function App() {
     const [conversationId, setConversationId] = useState<string>("")
     const [conversationPersonName, setConversationPersonName] =
         useState<string>("")
+    const [conversationRecipientId, setConversationRecipientId] =
+        useState<string>("")
 
     const [messages, setMessages] = useState<Message[]>([])
 
@@ -110,12 +119,51 @@ function App() {
 
     const conversationClickHandler = (
         conversationId: string,
-        conversationPersonName: string
+        conversationPersonName: string,
+        conversationRecipientId: string
     ) => {
         setConversationId(conversationId)
         setConversationPersonName(conversationPersonName)
+        setConversationRecipientId(conversationRecipientId)
         fetchMessagesHandler(conversationId)
     }
+
+    const [messageToSend, setMessageToSend] = useState("")
+    const messageBoxRef = useRef<HTMLInputElement>(null)
+
+    const sendMessageHandler = async () => {
+        const res = await sendMessage({
+            conversation_id: conversationId,
+            message: messageToSend,
+        })
+        if (res.data) {
+            const messageToAdd = res.data.message as unknown as Message
+            setMessages((prev) => [...prev, messageToAdd])
+
+            if (socket === null) return
+            socket.emit("send_message", {
+                message: res.data.message,
+                conversationRecipientId: conversationRecipientId,
+            })
+        }
+        if (messageBoxRef.current) messageBoxRef.current.value = ""
+    }
+
+    useEffect(() => {
+        if (socket === null) return
+        socket.emit("new_user", user?.id)
+    }, [socket])
+
+    useEffect(() => {
+        if (socket === null) return
+        socket.on("receive_message", (res) => {
+            setMessages((prev) => [...prev, res.message])
+        })
+
+        return () => {
+            socket.off("receive_message")
+        }
+    }, [socket])
 
     return (
         <>
@@ -151,7 +199,12 @@ function App() {
                                                         ? conversation.ToUser
                                                               .name
                                                         : conversation.FromUser
-                                                              .name
+                                                              .name,
+                                                    conversation.FromUser.id ===
+                                                        user?.id
+                                                        ? conversation.ToUser.id
+                                                        : conversation.FromUser
+                                                              .id
                                                 )
                                             }
                                         >
@@ -212,12 +265,16 @@ function App() {
                                     type="text"
                                     placeholder="Type here"
                                     className="input w-full focus-visible:outline-0 bg-default-primary text-neutral placeholder:text-neutral"
+                                    onChange={(e) => {
+                                        setMessageToSend(e.target.value)
+                                    }}
+                                    ref={messageBoxRef}
                                 />
                             </div>
                             <div className="flex justify-center items-center">
                                 <IconButton
                                     type="error"
-                                    onClick={() => console.log("send")}
+                                    onClick={sendMessageHandler}
                                 >
                                     <IconSend2 size={30} />
                                 </IconButton>
