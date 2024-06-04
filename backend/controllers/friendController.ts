@@ -4,6 +4,7 @@ import { emailExists } from "./userController"
 import Conversation from "../models/Conversation"
 import User from "../models/User"
 import TUserSchema from "../types/UserType"
+import { Op } from "sequelize"
 
 // @desc    Add a friend
 // @route   Post /api/friends/add
@@ -31,16 +32,45 @@ export async function add(req: Request, res: Response) {
 
         const sender = req.user as TUserSchema
 
-        console.log(sender.email, recipient.email)
-
         if (sender.email == recipient.email) {
             return res.status(500).json({ error: "You cannot add yourself." })
         }
 
-        const conversation = Conversation.create({
+        const oldConversation = await Conversation.findOne({
+            where: {
+                [Op.or]: [
+                    {
+                        from_user: sender.id,
+                        to_user: recipient.id,
+                    },
+                    {
+                        from_user: recipient.id,
+                        to_user: sender.id,
+                    },
+                ],
+            },
+        })
+
+        if (oldConversation) {
+            return res
+                .status(500)
+                .json({ error: "You've already added this friend." })
+        }
+
+        const conversation = await Conversation.create({
             from_user: sender.id,
             to_user: recipient.id,
         })
+
+        const fromUser = await User.findByPk(sender.id, {
+            attributes: ["id", "name", "email"],
+        })
+        const toUser = await User.findByPk(recipient.id, {
+            attributes: ["id", "name", "email"],
+        })
+
+        conversation.setDataValue("FromUser", fromUser)
+        conversation.setDataValue("ToUser", toUser)
 
         return res.status(200).json({
             conversation: conversation,

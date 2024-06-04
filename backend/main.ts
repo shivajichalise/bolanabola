@@ -33,22 +33,21 @@ io.on("connection", (socket) => {
             onlineUsers.push({ userId, socketId: socket.id })
     })
 
-    socket.on("send_message", (message) => {
-        console.log("MESSAGE", message)
-        console.log("Online users: ", onlineUsers)
-        console.log(
-            "conversationRecipientId: ",
-            message.conversationRecipientId
-        )
+    socket.on("message_sent", (message) => {
         const user = onlineUsers.find(
             (onlineUser) =>
                 onlineUser.userId === message.conversationRecipientId
         )
-        console.log("USER", user)
 
         if (user) {
-            socket.to(user.socketId).emit("receive_message", message)
+            io.to(user.socketId).emit("message_received", message)
         }
+    })
+
+    socket.on("disconnect", () => {
+        onlineUsers = onlineUsers.filter(
+            (onlineUser) => onlineUser.socketId !== socket.id
+        )
     })
 })
 
