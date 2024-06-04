@@ -1,7 +1,7 @@
 import { IconSend2 } from "@tabler/icons-react"
 import ChatProps from "../types/ChatProps"
-import ChatBubble from "./ChatBubble"
 import IconButton from "./IconButton"
+import ChatMessages from "./ChatMessages"
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../store"
@@ -12,7 +12,6 @@ import {
 } from "../slices/conversationSlice"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { socket } from "../socket"
-import useChatScroll from "../hooks/useChatScroll"
 
 const Chat = (props: ChatProps) => {
     const { conversation } = props
@@ -24,21 +23,6 @@ const Chat = (props: ChatProps) => {
     const [messageToSend, setMessageToSend] = useState("")
     const messageBoxRef = useRef<HTMLInputElement>(null)
     const queryClient = useQueryClient()
-    const messagesContainer = useRef<HTMLDivElement>(null)
-
-    const Scroll = () => {
-        if (messagesContainer.current) {
-            const { offsetHeight, scrollHeight, scrollTop } =
-                messagesContainer.current as HTMLDivElement
-            if (scrollHeight <= scrollTop + offsetHeight + 100) {
-                messagesContainer.current?.scrollTo(0, scrollHeight)
-            }
-        }
-    }
-
-    useEffect(() => {
-        Scroll()
-    }, [messages])
 
     const fetchMessagesHandler = async () => {
         const res = await fetchMessages({
@@ -113,28 +97,13 @@ const Chat = (props: ChatProps) => {
                         </h1>
                     </div>
 
-                    <div
-                        className="flex flex-col p-3 h-full overflow-y-scroll"
-                        ref={messagesContainer}
-                    >
+                    <div className="flex flex-col p-3 h-full overflow-y-scroll">
                         {isMessagesLoading ? (
                             <div className="flex h-full justify-center items-center">
                                 <span className="loading loading-spinner loading-lg"></span>
                             </div>
                         ) : (
-                            <div>
-                                {messages.map((message) => (
-                                    <ChatBubble
-                                        position={
-                                            message.from_user == user?.id
-                                                ? "end"
-                                                : "start"
-                                        }
-                                        message={message.message}
-                                        key={message.id}
-                                    />
-                                ))}
-                            </div>
+                            <ChatMessages messages={messages} />
                         )}
                     </div>
 
