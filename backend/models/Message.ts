@@ -11,22 +11,6 @@ const Message = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        conversation_id: {
-            type: DataTypes.UUID,
-            references: {
-                model: Conversation,
-                key: "id",
-            },
-            allowNull: false,
-        },
-        from_user: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
-                key: "id",
-            },
-            allowNull: false,
-        },
         message: {
             type: DataTypes.TEXT("long"),
             allowNull: false,
@@ -46,6 +30,17 @@ const Message = sequelize.define(
         },
     }
 )
+
+Message.belongsTo(User, {
+    foreignKey: "from_user",
+    as: "FromUser",
+    constraints: false,
+})
+Message.belongsTo(Conversation, {
+    foreignKey: "conversation_id",
+    as: "Conversation",
+    constraints: false,
+})
 
 Message.sync({ alter: true })
 export default Message

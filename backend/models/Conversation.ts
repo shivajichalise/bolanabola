@@ -11,20 +11,6 @@ const Conversation = sequelize.define(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        from_user: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
-                key: "id",
-            },
-        },
-        to_user: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
-                key: "id",
-            },
-        },
     },
     {
         tableName: "conversations",
@@ -41,18 +27,26 @@ const Conversation = sequelize.define(
     }
 )
 
-Conversation.belongsTo(User, { foreignKey: "from_user", as: "FromUser" })
-Conversation.belongsTo(User, { foreignKey: "to_user", as: "ToUser" })
+Conversation.belongsTo(User, {
+    foreignKey: "from_user",
+    as: "FromUser",
+    constraints: false,
+})
+Conversation.belongsTo(User, {
+    foreignKey: "to_user",
+    as: "ToUser",
+    constraints: false,
+})
 
-User.hasMany(Conversation, { foreignKey: "from_user", as: "SentConversations" })
+User.hasMany(Conversation, {
+    foreignKey: "from_user",
+    as: "SentConversations",
+    constraints: false,
+})
 User.hasMany(Conversation, {
     foreignKey: "to_user",
     as: "ReceivedConversations",
-})
-
-Message.belongsTo(Conversation, {
-    foreignKey: "conversation_id",
-    as: "Conversation",
+    constraints: false,
 })
 
 Conversation.sync({ alter: true })
