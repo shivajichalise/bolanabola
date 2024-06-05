@@ -28,7 +28,7 @@
 
 :root {
     font-family: 'Mona-Sans', sans-serif;
-    background: url("./assets/dotted_pattern.svg") no-repeat;
+    background: url("./assets/dotted_pattern.svg");
 }
 
 html {

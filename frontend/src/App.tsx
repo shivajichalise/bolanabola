@@ -75,10 +75,10 @@ function App() {
         <>
             <Navbar menus={navLinks} />
             <div
-                className={`flex justify-center ${theme === "dark" && "bg-base-300"} items-center h-[calc(100vh-4rem)]`}
+                className={`flex justify-center ${theme === "dark" && "bg-base-300"} items-center h-full lg:h-[calc(100vh-4rem)]`}
             >
-                <div className="w-4/5 flex justify-around items-center h-full">
-                    <div className="flex flex-col bg-neutral rounded-lg h-5/6 w-1/3 text-default-primary">
+                <div className="w-4/5 flex flex-wrap justify-around items-center h-full">
+                    <div className="flex flex-col bg-neutral rounded-lg w-full lg:w-1/3 lg:h-5/6 my-10 lg:mt-0 text-default-primary">
                         <div className="w-full px-4">
                             <InputText
                                 type="text"

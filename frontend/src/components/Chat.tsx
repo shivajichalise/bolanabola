@@ -81,7 +81,7 @@ const Chat = (props: ChatProps) => {
     }
 
     return (
-        <div className="bg-neutral rounded-lg h-5/6 w-3/5 text-default-primary flex flex-col justify-between">
+        <div className="bg-neutral rounded-lg w-full h-screen lg:h-5/6 lg:w-3/5 mb-10 lg:mb-0 text-default-primary flex flex-col justify-between">
             {conversation ? (
                 <>
                     <div className="rounded-lg flex justify-start items-center p-3 bg-neutral-content">
