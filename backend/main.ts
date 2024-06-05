@@ -19,7 +19,8 @@ type OnlineUsers = {
 }[]
 
 const app = express()
-const io = new Server(3001, {
+const SOCKET_PORT: number = process.env.SOCKET_PORT! as unknown as number
+const io = new Server(SOCKET_PORT, {
     cors: {
         origin: process.env.APP_URL,
     },
@@ -79,14 +80,16 @@ app.use(passport.session())
 app.use(
     cors({
         credentials: true,
-        origin: "http://localhost:5173",
+        origin: process.env.APP_URL,
     })
 )
 
 connectDB()
 
 app.get("/api", (_, res) => {
-    return res.json({ message: "Running on port 3000" }).status(200)
+    return res
+        .json({ message: `Running on port ${process.env.PORT}` })
+        .status(200)
 })
 
 app.use("/api", authRoutes)
