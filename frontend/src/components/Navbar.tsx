@@ -20,7 +20,7 @@ const Navbar = (props: NavbarProps) => {
     const isSignedIn = useSelector((state: RootState) => state.auth.isSignedIn)
     const theme = useSelector((state: RootState) => state.theme.mode)
 
-    const [logout, { isLoading, error }] = useLogoutMutation()
+    const [logout] = useLogoutMutation()
     const dispatch = useDispatch()
 
     const { menus: navLinks } = props
