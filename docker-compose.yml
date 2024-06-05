@@ -21,7 +21,7 @@ services:
         build: backend
         container_name: bolanabola_backend
         ports:
-            - 127.0.0.1:3000:3000
+            - 3000:3000
         restart: unless-stopped
         volumes:
             - ./backend:/backend
@@ -43,7 +43,7 @@ services:
         build: frontend
         container_name: bolanabola_frontend
         ports:
-            - 127.0.0.1:5173:5173
+            - 5173:5173
         restart: unless-stopped
         volumes:
             - ./frontend:/frontend

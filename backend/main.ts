@@ -12,6 +12,7 @@ import passport from "passport"
 import cookieParser from "cookie-parser"
 import "dotenv/config"
 import { Server } from "socket.io"
+import { createServer } from "http"
 
 type OnlineUsers = {
     userId: string
@@ -19,8 +20,8 @@ type OnlineUsers = {
 }[]
 
 const app = express()
-const SOCKET_PORT: number = process.env.SOCKET_PORT! as unknown as number
-const io = new Server(SOCKET_PORT, {
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
     cors: {
         origin: process.env.APP_URL,
     },
@@ -97,4 +98,4 @@ app.use("/api/friends", friendRoutes)
 app.use("/api/conversations", conversationRoutes)
 app.use("/api/messages", messageRoutes)
 
-export default app
+export default httpServer

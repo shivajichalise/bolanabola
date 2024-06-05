@@ -11,13 +11,17 @@ export default defineConfig({
     },
     preview: {
         port: 5173,
+        host: true,
         strictPort: true,
     },
     server: {
+        host: true,
         port: 5173,
+        strictPort: true,
         proxy: {
             "/api": {
-                target: "http://localhost:3000",
+                // target: "http://bolanabola_backend:3000", // use this for docker compose up
+                target: "http://localhost:3000", // use this for local npm run dev
                 changeOrigin: true,
             },
         },
