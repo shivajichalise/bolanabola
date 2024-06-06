@@ -20,8 +20,8 @@ export default defineConfig({
         strictPort: true,
         proxy: {
             "/api": {
-                // target: "http://bolanabola_backend:3000", // use this for docker compose up
-                target: "http://localhost:3000", // use this for local npm run dev
+                target: "http://bolanabola_backend:3000", // use this for docker compose up
+                // target: "http://localhost:3000", // use this for local npm run dev
                 changeOrigin: true,
             },
         },
